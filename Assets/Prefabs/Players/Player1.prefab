@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 86e9b2833d2c69d44bed55f4503e5257, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -45
+      value: -262.49243
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 86e9b2833d2c69d44bed55f4503e5257, type: 3}
       propertyPath: m_LocalPosition.y
@@ -30,7 +30,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 86e9b2833d2c69d44bed55f4503e5257, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -45
+      value: -16.06027
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 86e9b2833d2c69d44bed55f4503e5257, type: 3}
       propertyPath: m_LocalRotation.w
@@ -38,7 +38,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 86e9b2833d2c69d44bed55f4503e5257, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 86e9b2833d2c69d44bed55f4503e5257, type: 3}
       propertyPath: m_LocalRotation.y
@@ -46,7 +46,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 86e9b2833d2c69d44bed55f4503e5257, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 86e9b2833d2c69d44bed55f4503e5257, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -72,10 +72,36 @@ PrefabInstance:
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 86e9b2833d2c69d44bed55f4503e5257, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2477627672110770396}
     - targetCorrespondingSourceObject: {fileID: 6657560127643677590, guid: 86e9b2833d2c69d44bed55f4503e5257, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6439901610971809301}
+    - targetCorrespondingSourceObject: {fileID: 6657560127643677590, guid: 86e9b2833d2c69d44bed55f4503e5257, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 38895066294926406}
   m_SourcePrefab: {fileID: 100100000, guid: 86e9b2833d2c69d44bed55f4503e5257, type: 3}
+--- !u!1 &4283480378308517536 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 86e9b2833d2c69d44bed55f4503e5257, type: 3}
+  m_PrefabInstance: {fileID: 4012869327494734833}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2477627672110770396
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283480378308517536}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108f7bd320104c44abc519af36561627, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  waypointsParent: {fileID: 0}
+  waypoints: []
+  moveSpeed: 15
 --- !u!1 &7770104421721247847 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6657560127643677590, guid: 86e9b2833d2c69d44bed55f4503e5257, type: 3}
@@ -103,3 +129,18 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &38895066294926406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7770104421721247847}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108f7bd320104c44abc519af36561627, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
+  waypointsParent: {fileID: 0}
+  waypoints: []
+  moveSpeed: 5
