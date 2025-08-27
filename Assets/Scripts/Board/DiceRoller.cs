@@ -10,15 +10,15 @@ public class DiceRoller : MonoBehaviour
     public float launchTorque = 50f;
 
     public PlayerMovement player;
-    public CameraFollow cameraFollow;
+    public CameraFollow mainCamera;
     public Transform diceSpawn;
     public Button rollDiceButton;
 
     // ✅ Méthode pour passer les références depuis GameManager
-    public void Initialize(PlayerMovement player, CameraFollow cameraFollow, Transform diceSpawn, Button rollDiceButton)
+    public void Initialize(PlayerMovement player, CameraFollow mainCamera, Transform diceSpawn, Button rollDiceButton)
     {
         this.player = player;
-        this.cameraFollow = cameraFollow;
+        this.mainCamera = mainCamera;
         this.diceSpawn = diceSpawn;
         this.rollDiceButton = rollDiceButton;
     }
@@ -31,8 +31,8 @@ public class DiceRoller : MonoBehaviour
     public void RollDice()
     {
         // Caméra sur le plateau de dé
-        if (cameraFollow != null)
-            cameraFollow.FocusOnDiceBoard();
+        if (mainCamera != null)
+            mainCamera.FocusOnDiceBoard();
 
         // Lancer le dé
         StartCoroutine(ThrowDice());
@@ -89,15 +89,16 @@ public class DiceRoller : MonoBehaviour
         int diceValue = GetComponent<DiceValue>().GetDiceValue();
 
         // On fait un focus temporaire au-dessus du dé
-        if (cameraFollow != null)
+        if (mainCamera != null)
         {
-            Vector3 topViewPos = diceRigidbody.position + new Vector3(0f, 30f, 5f);
-            cameraFollow.SetTemporaryTarget(topViewPos);
+            Vector3 diceCamPos = new Vector3(191.5f, 40f, -32.5f);
+            Quaternion diceCamRot = Quaternion.Euler(90f, 90f, 90f);
+            mainCamera.SetTemporaryTarget(diceCamPos, diceCamRot);
         }
         yield return new WaitForSeconds(2f);
 
-        if (cameraFollow != null)
-            cameraFollow.FocusOnPlayer();
+        if (mainCamera != null)
+            mainCamera.FocusOnPlayer();
         
         // Avancer le joueur
         if (player != null)
@@ -137,7 +138,7 @@ public class DiceRoller : MonoBehaviour
     private void OnPlayerMoveFinished()
     {
         // caméra retourne sur le plateau de dé et i
-        if (cameraFollow != null)
+        if (mainCamera != null)
         {
             Invoke(nameof(FocusDiceBoardWithDelay), 0.5f);
             if (rollDiceButton != null)
@@ -153,7 +154,7 @@ public class DiceRoller : MonoBehaviour
 
     private void FocusDiceBoardWithDelay()
     {
-        cameraFollow.FocusOnDiceBoard();
+        mainCamera.FocusOnDiceBoard();
     }
 
     private void ShowRollDiceButton()

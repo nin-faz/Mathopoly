@@ -8,7 +8,12 @@ public class CameraFollow : MonoBehaviour
     public float smoothSpeed = 5f;
 
     private Transform currentTarget;
-    private Vector3? temporaryTarget = null;
+    private Vector3? temporaryTargetPos  = null;
+    private Quaternion? temporaryTargetRot = null;
+
+    // 🎥 Modes de vue joueur
+    private enum CameraMode { TopDown, Isometric }
+    private CameraMode currentMode = CameraMode.TopDown;
 
     void Start()
     {
@@ -18,13 +23,57 @@ public class CameraFollow : MonoBehaviour
 
     void LateUpdate()
     {
-        if (currentTarget == null) return;
+         Vector3 targetPos;
+        Quaternion targetRot;
 
-        // Si on a un target temporaire, on le prend, sinon target normal
-        Vector3 targetPos = temporaryTarget.HasValue ? temporaryTarget.Value : currentTarget.position;
+        if (temporaryTargetPos.HasValue && temporaryTargetRot.HasValue)
+        {
+            targetPos = temporaryTargetPos.Value;
+            targetRot = temporaryTargetRot.Value;
+        }
+        else if (currentTarget != null)
+        {
+            if (currentTarget == player)
+            {
+                // --- Vue joueur selon le mode ---
+                if (currentMode == CameraMode.TopDown)
+                {
+                    targetPos = currentTarget.position + new Vector3(0, 40, 0);
+                    targetRot = Quaternion.Euler(90f, 0f, 0f);
+                }
+                else // Isometric
+                {
+                    targetPos = currentTarget.position + new Vector3(-10, 15, -10);
+                    targetRot = Quaternion.Euler(45f, 45f, 0f);
+                }
+            }
+            else
+            {
+                 // --- Vue plateau ---
+                targetPos = currentTarget.position + offset;
+                targetRot = Quaternion.LookRotation(currentTarget.position - transform.position);
+            }
+        }
+        else return;
 
-        transform.position = Vector3.Lerp(transform.position, targetPos + offset, smoothSpeed * Time.deltaTime);
-        transform.LookAt(currentTarget);
+        // Smooth camera movement
+        transform.position = Vector3.Lerp(transform.position, targetPos, smoothSpeed * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, targetRot, smoothSpeed * Time.deltaTime);
+
+        // 🎮 Switch caméra (touche C)
+        if (Input.GetKeyDown(KeyCode.C) && currentTarget == player)
+        {
+            ToggleCameraMode();
+        }
+    }
+
+    // ✅ Switch entre TopDown et Isometric
+    private void ToggleCameraMode()
+    {
+        if (currentMode == CameraMode.TopDown)
+            currentMode = CameraMode.Isometric;
+        else
+            currentMode = CameraMode.TopDown;
     }
 
     // Focus normal
@@ -47,14 +96,16 @@ public class CameraFollow : MonoBehaviour
     }
 
     // ✅ Focus temporaire sur une position
-    public void SetTemporaryTarget(Vector3 pos)
+    public void SetTemporaryTarget(Vector3 pos, Quaternion rot)
     {
-        temporaryTarget = pos;
+        temporaryTargetPos = pos;
+        temporaryTargetRot = rot;
     }
 
     // ✅ Revenir à target normal
     public void ClearTemporaryTarget()
     {
-        temporaryTarget = null;
+        temporaryTargetPos = null;
+        temporaryTargetRot = null;
     }
 }

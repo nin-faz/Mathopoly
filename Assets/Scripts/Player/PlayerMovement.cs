@@ -12,10 +12,11 @@ public class PlayerMovement : MonoBehaviour
 
     [Header("Waypoints")]
     public Transform waypointsParent;
-    public Transform[] waypoints; // assigné dans l’inspector
+    public Transform[] waypoints;
 
     [Header("Mouvement")]
     public float moveSpeed = 15f;
+    public float speedBoostMultiplier = 3f;
 
     public Button rollDiceButton;
 
@@ -76,7 +77,16 @@ public class PlayerMovement : MonoBehaviour
             // On déplace le pion vers la prochaine case
             while (Vector3.Distance(transform.position, target) > 0.1f)
             {
-                transform.position = Vector3.MoveTowards(transform.position, target, moveSpeed * Time.deltaTime);
+                float currentSpeed = moveSpeed;
+
+                // Si flèche droite enfoncée, accélère
+                if (Input.GetKey(KeyCode.RightArrow)) {
+                    currentSpeed *= speedBoostMultiplier;
+                    if (animator) animator.speed = speedBoostMultiplier;
+                } else if (animator) animator.speed = 1f;
+
+                transform.position = Vector3.MoveTowards(transform.position, target, currentSpeed * Time.deltaTime);
+                
                 yield return null;
             }
 

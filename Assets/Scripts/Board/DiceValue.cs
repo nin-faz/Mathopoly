@@ -7,7 +7,6 @@ public class DiceValue : MonoBehaviour
     public void SetCurrentValue(int value)
     {
         currentValue = value;
-        Debug.Log("Valeur du dé détectée : " + value);
     }
 
     public int GetDiceValue()
