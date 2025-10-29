@@ -66,12 +66,12 @@ public class DiceRoller : MonoBehaviour
 
             // ⚡ On attend qu’il s'arrête ou qu'il tombe
             yield return new WaitUntil(() => {
-                return diceRigidbody.position.y < -1f || (diceRigidbody.linearVelocity.magnitude < 0.01f && 
+                return diceRigidbody.position.y < 1f || (diceRigidbody.linearVelocity.magnitude < 0.01f && 
                         diceRigidbody.angularVelocity.magnitude < 0.01f);
             });
 
             // Si le dé est tombé, on le relance
-            if (diceRigidbody.position.y < -1f) 
+            if (diceRigidbody.position.y < 1f) 
             {
                 continue;
             }
